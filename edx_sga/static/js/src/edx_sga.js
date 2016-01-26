@@ -28,17 +28,17 @@ function StaffGradedAssignmentXBlock(runtime, element) {
                 add: function(e, data) {
                     var do_upload = $(content).find(".upload").html('');
                     $('<button/>')
-                        .text('Upload ' + data.files[0].name)
+                        .text(gettext("Upload") + " " + data.files[0].name)
                         .appendTo(do_upload)
                         .click(function() {
-                            do_upload.text("Uploading...");
+                            do_upload.text(gettext("Uploading..."));
                             data.submit();
                         });
                 },
                 progressall: function(e, data) {
                     var percent = parseInt(data.loaded / data.total * 100, 10);
                     $(content).find(".upload").text(
-                        "Uploading... " + percent + "%");
+                        gettext("Uploading...") + " " + percent + "%");
                 },
                 fail: function(e, data) {
                     /**
@@ -52,15 +52,15 @@ function StaffGradedAssignmentXBlock(runtime, element) {
                          * here, so no good way to inform the user of what the
                          * limit is.
                          */
-                        state.error = "The file you are trying to upload is too large."
+                        state.error = gettext("The file you are trying to upload is too large.")
                     }
                     else {
                         // Suitably vague
-                        state.error = "There was an error uploading your file.";
+                        state.error = gettext("There was an error uploading your file.");
 
                         // Dump some information to the console to help someone
                         // debug.
-                        console.log("There was an error with file upload.");
+                        console.log(gettext("There was an error with file upload."));
                         console.log("event: ", e);
                         console.log("data: ", data);
                     }
@@ -119,7 +119,7 @@ function StaffGradedAssignmentXBlock(runtime, element) {
                     url: url,
                     progressall: function(e, data) {
                         var percent = parseInt(data.loaded / data.total * 100, 10);
-                        row.find(".upload").text("Uploading... " + percent + "%");
+                        row.find(".upload").text(gettext("Uploading...") + " " + percent + "%");
                     },
                     done: function(e, data) { 
                         // Add a time delay so user will notice upload finishing
@@ -146,16 +146,16 @@ function StaffGradedAssignmentXBlock(runtime, element) {
                 var score = Number(form.find("#grade-input").val());
                 event.preventDefault();
                 if (isNaN(score)) {
-                    form.find(".error").html("<br/>Grade must be a number.");
+                    form.find(".error").html("<br/>" + gettext("Grade must be a number."));
                 } 
                 else if (score != parseInt(score)) {
-                    form.find(".error").html("<br/>Grade must be an integer.");
+                    form.find(".error").html("<br/>" + gettext("Grade must be an integer."));
                 }
                 else if (score < 0) {
-                    form.find(".error").html("<br/>Grade must be positive.");
+                    form.find(".error").html("<br/>" + gettext("Grade must be positive."));
                 }
                 else if (score > max_score) {
-                    form.find(".error").html("<br/>Maximum score is " + max_score);
+                    form.find(".error").html("<br/>" + gettext("Maximum score is") + " " + max_score);
                 }
                 else {
                     // No errors
